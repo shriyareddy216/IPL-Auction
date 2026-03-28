@@ -1,0 +1,26 @@
+# Walkthrough - Auction Flow Fixes
+
+I have implemented an automated auction flow to ensure a smoother experience for all participants.
+
+## Changes Made
+
+### Backend: Automated Transition Logic
+- Updated `processSoldPlayer` in `server.js` to automatically advance the auction.
+- **Auto-Advance:** After a player is sold or goes unsold, the system now waits for **5 seconds** before automatically fetching the next player from the queue.
+- **State Clearing:** The "Current Bid" and "Leading Team" states are now reset immediately after a sale to prevent visual confusion between auction rounds.
+- **Pause Respect:** The auto-advance logic respects the Room's paused state. If the Host pauses the room during a sale, it will stop before loading the next player.
+
+### Frontend: Improved Sold Status
+- The "Sold" overlay is now triggered immediately upon the sale event and remains visible during the 5-second transition window.
+- The clearing of the "Sold" screen is now tightly coupled with the arrival of a new active player, ensuring a flicker-free transition.
+
+## Verification Results
+
+### Manual Test
+- [x] Host started the auction.
+- [x] Bid placed and timer expired.
+- [x] **Sold Overlay:** Appeared immediately for all participants.
+- [x] **Auto-Flow:** After 5 seconds, the overlay disappeared and the next player's card loaded automatically.
+- [x] **Manual Skip:** Host's manual "Next Player" button remains functional and correctly overrides the timer if needed.
+
+The application is now running from a fresh directory in the current conversation to ensure all changes are persistent and editable.

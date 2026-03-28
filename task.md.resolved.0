@@ -1,0 +1,6 @@
+# Auction Fix Tasks
+
+- [ ] Backend: Clear active player and add auto-advance timeout in `server.js`
+- [ ] Backend: Ensure state reset in `startNextAuction`
+- [ ] Frontend: Prevent premature `soldEvent` clearing in `AuctionRoom.jsx`
+- [ ] Verification: Test the auto-flow and sold status display

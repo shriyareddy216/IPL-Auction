@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Outfit", "Segoe UI", Roboto, sans-serif;
+  --color-ipl-blue: #0E1A3D;
+  --color-ipl-red: #D51A36;
+  --color-ipl-gold: #DAB975;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-900 text-slate-100 font-sans antialiased;
+    background-image: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+}

@@ -1,0 +1,41 @@
+# Fix Auction Flow and Sold Status Visibility
+
+The user reports that the next player doesn't load automatically and the "Sold" status isn't clearly shown for the current player.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The auction will now automatically advance to the next player after a 5-second delay following a sale or unsold event. This ensures a continuous flow without requiring the host to manually click "Next" every time.
+
+## Proposed Changes
+
+### [Component Name] Backend Logic
+
+#### [MODIFY] [server.js](file:///Users/shriyareddy/.gemini/antigravity/brain/3c732567-53c7-4226-be64-877b41286e7c/backend/server.js)
+- Modify `processSoldPlayer` to:
+    - Clear `room.activePlayer` (after emitting the event) to signal the end of the current bidding cycle.
+    - Implement a `setTimeout` to automatically call `startNextAuction(roomId)` after 5 seconds.
+- Ensure `startNextAuction` correctly resets all room-level bidding state (highestBid, leadingTeam, etc.).
+
+---
+
+### [Component Name] Frontend UI
+
+#### [MODIFY] [AuctionRoom.jsx](file:///Users/shriyareddy/.gemini/antigravity/brain/3c732567-53c7-4226-be64-877b41286e7c/frontend/src/pages/AuctionRoom.jsx)
+- Update the `auctionStateUpdate` listener to ensure it doesn't prematurely clear `soldEvent` if the `activePlayer` hasn't actually changed.
+- Enhance the "Sold" overlay to ensure it's unmistakable.
+
+## Open Questions
+- Should the 5-second delay be configurable? (Currently hardcoded for simplicity).
+
+## Verification Plan
+
+### Automated Tests
+- N/A (Manual verification via browser tool).
+
+### Manual Verification
+1. Open the Auction Room.
+2. Start the auction as Host.
+3. Place a bid or let the timer run out.
+4. Verify the "Sold/Unsold" overlay appears.
+5. Verify the next player loads automatically after 5 seconds.
